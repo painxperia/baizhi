@@ -7,8 +7,6 @@
 
 双击 `BaiZhi-0.1.2-Setup.exe` 安装，通过桌面或开始菜单中的「白纸」打开。运行打包后的应用无需安装 Node.js，也无需联网登录。
 
-开发目录中可双击 `启动白纸.cmd` 直接运行现成的桌面程序。源码目录和内部包名继续使用 `inkstone`。
-
 这是第一版，已实现：
 
 - 常用 Markdown 的即时编辑：标题、粗体、斜体、删除线、引用、列表、任务列表、代码高亮、表格、图片、KaTeX 公式。
@@ -50,38 +48,3 @@
 | 正文 | Ctrl + Shift + 0 |
 | 放大 / 缩小 / 重置字号 | Ctrl + + / Ctrl + - / Ctrl + 0 |
 
-## 开发
-
-需要 Node.js 22.12 或更新版本。
-
-```powershell
-npm install
-npm run dev:desktop
-```
-
-```powershell
-npm run build
-npm start
-npm run package
-```
-
-`npm run package` 生成 Windows x64 NSIS 安装包，构建产物在 `release/`。应用由 Electron、TypeScript、Vite 和 Tiptap 构成，主进程和编辑器进程通过隔离的预加载接口通信。当前 0.1.2 发布构建放在 `release/0.1.2/`。
-
-## 验证
-
-```powershell
-npm test
-npm run test:desktop
-npm run test:remove
-npm run test:table
-```
-
-测试涵盖文件授权、保存冲突、原文保留、编辑器转换、查找替换，以及桌面端的文件打开保存与导出。编辑器和桌面测试会启动隔离的 Electron 实例；结果与截图保存在 `artifacts/`。
-
-2026-10-09，0.1.1 验证结果：10 项编辑器及文件服务测试通过，19 个桌面操作场景通过；打包后的 0.1.1 程序通过全部 25 个移除场景，涵盖保存、取消、子目录边界、缓存别名、刷新、重新打开及重启恢复。报告在 `artifacts/desktop-report.json` 和 `artifacts/remove-packaged-report.json`，移除入口截图在 `artifacts/preview-removal.png`。
-
-## 第一版的边界
-
-这一版尚未覆盖 Typora 的全部功能。Mermaid、脚注、YAML 元数据和某些自定义 HTML 等扩展语法使用源码模式，以保留文件内容。富文本编辑会规范常用 Markdown 的空格和标记；未修改的文件保留原文。长文档优化、自定义 CSS 主题、DOCX / EPUB 导出、完整文件管理和多窗口编辑可在后续版本补充。
-
-草稿是恢复副本，不会自动覆盖原始 Markdown 文件。要持久保存文档，请使用 Ctrl + S。
